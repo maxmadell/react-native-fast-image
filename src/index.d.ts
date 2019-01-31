@@ -44,6 +44,11 @@ declare namespace FastImage {
         | FastImage.cacheControl.web
 }
 
+export type ResizeImageAndroid = {
+    width: number
+    height: number
+}
+
 export type FastImageSource = {
     uri?: string
     headers?: { [key: string]: string }
@@ -85,6 +90,7 @@ export interface FastImageProperties {
     source: FastImageSource | number
     placeholder?: React.ReactNode
     resizeMode?: FastImage.ResizeMode
+    resizeImageAndroid?: ResizeImageAndroid
     fallback?: boolean
 
     onLoadStart?(): void
