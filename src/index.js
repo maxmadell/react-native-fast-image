@@ -11,7 +11,7 @@ import {
 
 const FastImageViewNativeModule = NativeModules.FastImageView
 
-class FastImage extends Component {
+class FastImage extends React.Component {
     componentDidUpdate(prevProps, prevState) {
         if (this.props.source.uri === prevProps.source.uri) {
             return
@@ -45,7 +45,7 @@ class FastImage extends Component {
             fallback,
             placeholder,
             forwardedRef,
-            ...props,
+            ...props
         } = this.props
 
         const { loaded, error } = this.state
@@ -101,8 +101,8 @@ class FastImage extends Component {
                 {children}
             </View>
         )
-    },
-)
+    }
+}
 
 FastImage.displayName = 'FastImage'
 
@@ -155,6 +155,7 @@ const FastImageSourcePropType = PropTypes.shape({
     headers: PropTypes.objectOf(PropTypes.string),
     priority: PropTypes.oneOf(Object.keys(FastImage.priority)),
     cache: PropTypes.oneOf(Object.keys(FastImage.cacheControl)),
+    cacheOmitURLParams: PropTypes.boolean,
 })
 
 FastImage.propTypes = {
