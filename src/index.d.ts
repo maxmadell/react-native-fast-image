@@ -83,6 +83,7 @@ export interface OnProgressEvent {
 
 export interface FastImageProperties {
     source: FastImageSource | number
+    placeholder?: React.ReactNode
     resizeMode?: FastImage.ResizeMode
     fallback?: boolean
 
