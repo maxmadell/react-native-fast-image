@@ -1,3 +1,4 @@
+#import <SDWebImage/SDWebImage.h>
 #import "FFFastImageView.h"
 #import "FFFastImageCacheNoParamMapper.h"
 
@@ -120,7 +121,7 @@
                 options |= SDWebImageRefreshCached;
                 break;
             case FFFCacheControlCacheOnly:
-                options |= SDWebImageCacheMemoryOnly;
+                options |= SDWebImageFromCacheOnly;
                 break;
             case FFFCacheControlImmutable:
                 break;
@@ -142,6 +143,13 @@
         }
         hasCompleted = NO;
         hasErrored = NO;
+
+        // Image Resize
+        NSDictionary *context = @{};
+        if (!CGSizeEqualToSize(_source.resize, CGSizeZero)) {
+            context = @{SDWebImageContextImageTransformer: [SDImageResizingTransformer transformerWithSize:_source.resize
+                                                                                                 scaleMode:SDImageScaleModeFill]};
+        }
         
         // Load the new source.
         // This will work for:
@@ -150,36 +158,35 @@
         //   - file:///var/containers/Bundle/Application/545685CB-777E-4B07-A956-2D25043BC6EE/ReactNativeFastImageExample.app/assets/src/images/plankton.gif
         //   - file:///Users/dylan/Library/Developer/CoreSimulator/Devices/61DC182B-3E72-4A18-8908-8A947A63A67F/data/Containers/Data/Application/AFC2A0D2-A1E5-48C1-8447-C42DA9E5299D/Documents/images/E1F1D5FC-88DB-492F-AD33-B35A045D626A.jpg"
         __weak typeof(self) weakSelf = self;
-        [self sd_setImageWithURL:_source.url
-                placeholderImage:nil
-                         options:options
-                        progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
-                            if (_onFastImageProgress) {
-                                _onFastImageProgress(@{
-                                                       @"loaded": @(receivedSize),
-                                                       @"total": @(expectedSize)
-                                                       });
-                            }
-                        } completed:^(UIImage * _Nullable image,
-                                      NSError * _Nullable error,
-                                      SDImageCacheType cacheType,
-                                      NSURL * _Nullable imageURL) {
-                            if (error) {
-                                hasErrored = YES;
-                                if (_onFastImageError) {
-                                    _onFastImageError(@{});
-                                }
-                                if (_onFastImageLoadEnd) {
-                                    _onFastImageLoadEnd(@{});
-                                }
-                            } else {
-                                hasCompleted = YES;
-                                [weakSelf sendOnLoad:image];
-                                if (_onFastImageLoadEnd) {
-                                    _onFastImageLoadEnd(@{});
-                                }
-                            }
-                        }];
+		[self sd_setImageWithURL:_source.url
+				placeholderImage:nil
+						 options:options
+						 context:context
+						progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) {
+							if (_onFastImageProgress) {
+								_onFastImageProgress(@{
+													   @"loaded": @(receivedSize),
+													   @"total": @(expectedSize)
+													   });
+							}
+						}
+					   completed:^(UIImage * _Nullable image, NSError * _Nullable error, SDImageCacheType cacheType, NSURL * _Nullable imageURL) {
+						   if (error) {
+							   hasErrored = YES;
+							   if (_onFastImageError) {
+								   _onFastImageError(@{});
+							   }
+							   if (_onFastImageLoadEnd) {
+								   _onFastImageLoadEnd(@{});
+							   }
+						   } else {
+							   hasCompleted = YES;
+							   [weakSelf sendOnLoad:image];
+							   if (_onFastImageLoadEnd) {
+								   _onFastImageLoadEnd(@{});
+							   }
+						   }
+					   }];
     }
 }
 

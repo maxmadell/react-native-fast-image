@@ -7,6 +7,7 @@
                     headers:(NSDictionary *)headers
                cacheControl:(FFFCacheControl)cacheControl
 		 cacheOmitURLParams:(BOOL)cacheOmitURLParams
+                     resize:(CGSize)resize
 {
     self = [super init];
     if (self) {
@@ -15,6 +16,7 @@
         _headers = headers;
         _cacheControl = cacheControl;
 		_cacheOmitURLParams = cacheOmitURLParams;
+        _resize = resize;
     }
     return self;
 }
