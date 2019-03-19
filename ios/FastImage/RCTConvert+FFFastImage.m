@@ -42,12 +42,16 @@ RCT_ENUM_CONVERTER(FFFCacheControl, (@{
             headers = nil;
         }
     }
+
+    NSDictionary *resizeDictionary = [self NSDictionary:json[@"resize"]];
+    CGSize resize = CGSizeMake([resize["width"] floatValue], [resize["width"] floatValue]);
     
     FFFastImageSource *imageSource = [[FFFastImageSource alloc] initWithURL:uri
 																   priority:priority
 																	headers:headers
 															   cacheControl:cacheControl
-														 cacheOmitURLParams:[self BOOL:json[@"cacheOmitURLParams"]]];
+														 cacheOmitURLParams:[self BOOL:json[@"cacheOmitURLParams"]]
+                                                                     resize:resize];
     
     return imageSource;
 }
