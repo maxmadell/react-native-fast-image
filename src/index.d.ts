@@ -44,7 +44,7 @@ declare namespace FastImage {
         | FastImage.cacheControl.web
 }
 
-export type ResizeImageAndroid = {
+export type ResizeImage = {
     width: number
     height: number
 }
@@ -55,6 +55,7 @@ export type FastImageSource = {
     priority?: FastImage.Priority
     cache?: FastImage.Cache
     cacheOmitURLParams?: boolean
+    resize?: ResizeImage
 }
 
 export interface ImageStyle extends FlexStyle, TransformsStyle, ShadowStyleIOS {
@@ -90,7 +91,6 @@ export interface FastImageProperties {
     source: FastImageSource | number
     placeholder?: React.ReactNode
     resizeMode?: FastImage.ResizeMode
-    resizeImageAndroid?: ResizeImageAndroid
     fallback?: boolean
 
     onLoadStart?(): void

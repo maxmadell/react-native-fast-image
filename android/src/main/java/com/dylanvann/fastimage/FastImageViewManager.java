@@ -95,6 +95,9 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         int viewId = view.getId();
         eventEmitter.receiveEvent(viewId, REACT_ON_LOAD_START_EVENT, new WritableNativeMap());
 
+        // Image resize
+        view.imageSizeOverride = source.getMap("resize"); 
+
         if (requestManager != null) {
             requestManager
                     // This will make this work for remote and local images. e.g.
@@ -115,13 +118,6 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
     public void setResizeMode(FastImageViewWithUrl view, String resizeMode) {
         final FastImageViewWithUrl.ScaleType scaleType = FastImageViewConverter.getScaleType(resizeMode);
         view.setScaleType(scaleType);
-    }
-
-    @ReactProp(name = "resizeImageAndroid")
-    public void setImageResize(FastImageViewWithUrl view, ReadableMap imageSizeOverride) {
-        // Re-run Glide with width and height override values set.
-        view.imageSizeOverride = imageSizeOverride;
-        setSrc(view, view.source);
     }
 
     @Override
