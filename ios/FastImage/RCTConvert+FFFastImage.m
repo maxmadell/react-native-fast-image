@@ -44,7 +44,7 @@ RCT_ENUM_CONVERTER(FFFCacheControl, (@{
     }
 
     NSDictionary *resizeDictionary = [self NSDictionary:json[@"resize"]];
-    CGSize resize = CGSizeMake([resize["width"] floatValue], [resize["width"] floatValue]);
+    CGSize resize = CGSizeMake([resizeDictionary[@"width"] floatValue], [resizeDictionary[@"height"] floatValue]);
     
     FFFastImageSource *imageSource = [[FFFastImageSource alloc] initWithURL:uri
 																   priority:priority
