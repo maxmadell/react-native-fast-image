@@ -1,6 +1,6 @@
 {
     "name": "@connected-home/react-native-fast-image",
-    "version": "5.2.2",
+    "version": "5.2.3",
     "description": "🚩 FastImage, performant React Native image component.",
     "keywords": [
         "cache",
