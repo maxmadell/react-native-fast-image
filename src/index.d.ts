@@ -44,12 +44,18 @@ declare namespace FastImage {
         | FastImage.cacheControl.web
 }
 
+export type ResizeImage = {
+    width: number
+    height: number
+}
+
 export type FastImageSource = {
     uri?: string
     headers?: { [key: string]: string }
     priority?: FastImage.Priority
     cache?: FastImage.Cache
     cacheOmitURLParams?: boolean
+    resize?: ResizeImage
 }
 
 export interface ImageStyle extends FlexStyle, TransformsStyle, ShadowStyleIOS {

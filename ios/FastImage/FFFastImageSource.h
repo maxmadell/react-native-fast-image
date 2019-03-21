@@ -26,11 +26,14 @@ typedef NS_ENUM(NSInteger, FFFCacheControl) {
 @property (nonatomic) FFFCacheControl cacheControl;
 // omit URL query params for cacheKey
 @property (nonatomic) BOOL cacheOmitURLParams;
+// resizes image
+@property CGSize resize;
 
 - (instancetype)initWithURL:(NSURL *)url
                    priority:(FFFPriority)priority
                     headers:(NSDictionary *)headers
                cacheControl:(FFFCacheControl)cacheControl
-		 cacheOmitURLParams:(BOOL)cacheOmitURLParams;
+		 cacheOmitURLParams:(BOOL)cacheOmitURLParams
+                     resize:(CGSize)resize;
 
 @end

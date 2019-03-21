@@ -156,6 +156,10 @@ const FastImageSourcePropType = PropTypes.shape({
     priority: PropTypes.oneOf(Object.keys(FastImage.priority)),
     cache: PropTypes.oneOf(Object.keys(FastImage.cacheControl)),
     cacheOmitURLParams: PropTypes.boolean,
+    resize: PropTypes.shape({
+        width: PropTypes.number.isRequired,
+        height: PropTypes.number.isRequired,
+    })
 })
 
 FastImage.propTypes = {

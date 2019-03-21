@@ -54,6 +54,8 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
 
     @ReactProp(name = "source")
     public void setSrc(FastImageViewWithUrl view, @Nullable ReadableMap source) {
+        view.source = source;
+
         if (source == null || !source.hasKey("uri") || isNullOrEmpty(source.getString("uri"))) {
             // Cancel existing requests.
             if (requestManager != null) {
@@ -93,6 +95,11 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         int viewId = view.getId();
         eventEmitter.receiveEvent(viewId, REACT_ON_LOAD_START_EVENT, new WritableNativeMap());
 
+        // Image resize
+        if (source.hasKey("resize")) {
+            view.imageSizeOverride = source.getMap("resize"); 
+        }
+
         if (requestManager != null) {
             requestManager
                     // This will make this work for remote and local images. e.g.
@@ -103,6 +110,7 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
                     //    - data:image/png;base64
                     .load(imageSource.getSourceForLoad())
                     .apply(FastImageViewConverter.getOptions(source))
+                    .apply(FastImageViewConverter.getImageResizeOptions(view.imageSizeOverride))
                     .listener(new FastImageRequestListener(key))
                     .into(view);
         }

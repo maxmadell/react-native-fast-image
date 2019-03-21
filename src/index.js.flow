@@ -25,6 +25,11 @@ export type ResizeMode = $ReadOnly<{|
     center: 'center',
 |}>
 
+export type ResizeImage = $ReadOnly<{|
+    width: number,
+    height: number,
+|}>
+
 export type Priority = $ReadOnly<{|
     low: 'low',
     normal: 'normal',
@@ -47,7 +52,8 @@ export type FastImageSource = {
     headers?: Object,
     priority?: Priorities,
     cache?: CacheControls,
-    cacheOmitURLParams?: boolean
+    cacheOmitURLParams?: boolean,
+    resize?: ResizeImage
 }
 
 export type FastImageProps = $ReadOnly<{|
