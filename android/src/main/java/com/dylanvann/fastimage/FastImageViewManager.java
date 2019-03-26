@@ -96,7 +96,9 @@ class FastImageViewManager extends SimpleViewManager<FastImageViewWithUrl> imple
         eventEmitter.receiveEvent(viewId, REACT_ON_LOAD_START_EVENT, new WritableNativeMap());
 
         // Image resize
-        view.imageSizeOverride = source.getMap("resize"); 
+        if (source.hasKey("resize")) {
+            view.imageSizeOverride = source.getMap("resize");
+        }
 
         if (requestManager != null) {
             requestManager
