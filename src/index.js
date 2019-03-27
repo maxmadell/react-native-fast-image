@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react'
+import React, { forwardRef, Component } from 'react'
 import PropTypes from 'prop-types'
 import {
     View,
@@ -45,7 +45,7 @@ class FastImage extends Component {
             fallback,
             placeholder,
             forwardedRef,
-            ...props,
+            ...props
         } = this.props
 
         const { loaded, error } = this.state
@@ -101,8 +101,8 @@ class FastImage extends Component {
                 {children}
             </View>
         )
-    },
-)
+    }
+}
 
 FastImage.displayName = 'FastImage'
 
