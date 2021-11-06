@@ -36,18 +36,19 @@
 }
 
 - (id)init {
-	self = [super init];
-	if (self) {
-		_staticUrls = [NSMutableSet new];
-		[[SDWebImageManager sharedManager] setCacheKeyFilter:^NSString * _Nullable(NSURL * _Nullable url) {
-			NSString *staticURLString = [[url staticURL] absoluteString];
-			if ([_staticUrls containsObject:staticURLString]) {
-				return staticURLString;
-			}
-			return url.absoluteString;
-		}];
-	}
-	return self;
+    self = [super init];
+    if (self) {
+        _staticUrls = [NSMutableSet new];
+        SDWebImageManager.sharedManager.cacheKeyFilter = [
+            SDWebImageCacheKeyFilter cacheKeyFilterWithBlock:^NSString * _Nullable(NSURL * _Nonnull url) {
+                NSString *staticURLString = [[url staticURL] absoluteString];
+                if ([_staticUrls containsObject:staticURLString]) {
+                    return staticURLString;
+                }
+                return url.absoluteString;
+            }];
+    }
+    return self;
 }
 
 - (void)add:(NSURL*)url {
