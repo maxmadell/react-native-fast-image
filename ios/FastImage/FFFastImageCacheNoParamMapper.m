@@ -42,7 +42,7 @@
         SDWebImageManager.sharedManager.cacheKeyFilter = [
             SDWebImageCacheKeyFilter cacheKeyFilterWithBlock:^NSString * _Nullable(NSURL * _Nonnull url) {
                 NSString *staticURLString = [[url staticURL] absoluteString];
-                if ([_staticUrls containsObject:staticURLString]) {
+                if ([self->_staticUrls containsObject:staticURLString]) {
                     return staticURLString;
                 }
                 return url.absoluteString;
